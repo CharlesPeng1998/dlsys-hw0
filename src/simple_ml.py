@@ -19,9 +19,7 @@ def add(x, y):
     Return:
         Sum of x + y
     """
-    ### BEGIN YOUR CODE
-    pass
-    ### END YOUR CODE
+    return x + y
 
 
 def parse_mnist(image_filename, label_filename):
