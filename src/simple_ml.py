@@ -45,12 +45,12 @@ def parse_mnist(image_filename, label_filename):
                 labels of the examples.  Values should be of type np.uint8 and
                 for MNIST will contain the values 0-9.
     """
-    with gzip.open(f"data/{image_filename}", 'rb') as image_file:
+    with gzip.open(image_filename, 'rb') as image_file:
         image_file_content = image_file.read()
         _, num_images, num_rows, num_cols = struct.unpack_from(">iiii", image_file_content)
         X = np.frombuffer(image_file_content, dtype=np.uint8, offset=16).reshape(num_images, -1)
 
-    with gzip.open(f"data/{label_filename}", 'rb') as label_file:
+    with gzip.open(label_filename, 'rb') as label_file:
         label_file_content = label_file.read()
         y = np.frombuffer(label_file_content, dtype=np.uint8, offset=8)
     
