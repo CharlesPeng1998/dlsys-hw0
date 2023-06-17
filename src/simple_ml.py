@@ -47,7 +47,7 @@ def parse_mnist(image_filename, label_filename):
     """
     with gzip.open(image_filename, 'rb') as image_file:
         image_file_content = image_file.read()
-        num_images = struct.unpack_from(">i", image_file_content, 4)
+        num_images, = struct.unpack_from(">i", image_file_content, 4)
         X = np.frombuffer(image_file_content, dtype=np.uint8, offset=16)
         X_norm = X.reshape(num_images, -1).astype(np.float32) / 255
 
