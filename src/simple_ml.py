@@ -130,11 +130,26 @@ def nn_epoch(X, y, W1, W2, lr = 0.1, batch=100):
     Returns:
         None
     """
-    ### BEGIN YOUR CODE
-    pass
-    ### END YOUR CODE
+    def relu(x):
+        return np.maximum(0, x)
 
+    def normalize(x):
+        tmp = np.sum(x, axis=-1, keepdims=True)
+        return x / tmp
 
+    num_examples = X.shape[0]
+    num_classes = W2.shape[1]
+    for i in range(0, num_examples, batch):
+        x_batch = X[i: i + batch]
+        y_batch = y[i: i + batch]
+        Z = relu(np.matmul(x_batch, W1))
+        I_y = np.eye(num_classes)[y_batch]
+        G2 = normalize(np.exp(np.matmul(Z, W2))) - I_y
+        G1 = np.multiply(np.float32(Z > 0), np.matmul(G2, np.transpose(W2)))
+        g_w1 = np.matmul(np.transpose(x_batch), G1) / batch
+        g_w2 = np.matmul(np.transpose(Z), G2) / batch
+        W1[:,:] = W1[:,:] - lr * g_w1
+        W2[:,:] = W2[:,:] - lr * g_w2
 
 ### CODE BELOW IS FOR ILLUSTRATION, YOU DO NOT NEED TO EDIT
 
