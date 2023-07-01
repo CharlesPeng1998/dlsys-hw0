@@ -114,8 +114,8 @@ void softmax_regression_epoch_cpp(const float *X, const unsigned char *y,
      *     (None)
      */
     for (int i = 0; i <= m - batch; i += batch) {
-        const float* x_batch = X[i * n];
-        const unsigned char* y_batch = y[i];
+        const float* x_batch = X + i * n;
+        const unsigned char* y_batch = y + i;
         float* Z = matrix_mutiply(x_batch, theta, batch, n, k); // mn * nk = mk
         exp(Z, batch, k);
         normalize(Z, batch, k);
